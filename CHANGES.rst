@@ -1,3 +1,9 @@
+0.11
+====
+
+* added pprint method
+* fixed __version__ variable bug causing problems with tox testing
+
 0.10
 ====
 

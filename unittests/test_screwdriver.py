@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from screwdriver import (dynamic_load, camelcase_to_underscore, 
-    rows_to_columns, parse_link)
+    rows_to_columns, parse_link, pprint)
+from waelstow import capture_stdout
 
 # =============================================================================
 
@@ -44,3 +45,16 @@ class TestUtils(TestCase):
         url, text = parse_link('before <a href="/foo/bar.html">Stuff</a> after')
         self.assertEqual('/foo/bar.html', url)
         self.assertEqual('Stuff', text)
+
+    def test_pprint(self):
+        d = {
+            'foo':'bar',
+            'thing':3,
+        }
+
+        expected = """{\n    "foo": "bar",\n    "thing": 3\n}\n"""
+
+        with capture_stdout() as output:
+            pprint(d)
+
+        self.assertEqual(expected, output.getvalue())

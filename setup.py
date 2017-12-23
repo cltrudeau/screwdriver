@@ -1,6 +1,13 @@
-import os, sys
+import os, sys, re
 
-from screwdriver import __version__
+# get version info from module without importing it
+version_re = re.compile("""__version__[\s]*=[\s]*['|"](.*)['|"]""")
+
+with open('screwdriver.py') as f:
+    content = f.read()
+    match = version_re.search(content)
+    version = match.group(1)
+
 
 readme = os.path.join(os.path.dirname(__file__), 'README.rst')
 long_description = open(readme).read()
@@ -8,7 +15,7 @@ long_description = open(readme).read()
 
 SETUP_ARGS = dict(
     name='screwdriver',
-    version=__version__,
+    version=version,
     description=('Collection of random python tools and utilities '),
     long_description=long_description,
     url='https://github.com/cltrudeau/screwdriver',
@@ -35,9 +42,8 @@ SETUP_ARGS = dict(
         'six>=1.10',
     ],
     tests_require=[
-        'waelstow==0.10.0',
+        'waelstow>=0.10.1',
     ],
-
 )
 
 if __name__ == '__main__':

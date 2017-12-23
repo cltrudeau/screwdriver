@@ -1,9 +1,9 @@
-__version__ = '0.10.0'
+__version__ = '0.11.0'
 
-import sys
+import sys, json
 from collections import namedtuple
 
-from six.moves.html_parser import HTMLParser
+from six.moves import html_parser 
 
 # =============================================================================
 # Utility Methods
@@ -51,16 +51,16 @@ def rows_to_columns(matrix):
     return data
 
 
-class AnchorParser(HTMLParser):
+class AnchorParser(html_parser.HTMLParser):
     ParsedLink = namedtuple('ParsedLink', ['url', 'text'])
 
     def __init__(self, *args, **kwargs):
         if sys.version_info > (3,):
             super(AnchorParser, self).__init__(*args, **kwargs)
         else:   # pragma: no cover
-            # HTMLParser is still an old style object and so super doesn't
+            # html_parser is still an old style object and so super doesn't
             # work
-            HTMLParser.__init__(self, *args, **kwargs)
+            html_parser.HTMLParser.__init__(self, *args, **kwargs)
 
         self.capture = 0
         self.url = ''
@@ -104,3 +104,12 @@ def parse_link(html):
     parser = AnchorParser()
     parser.feed(html)
     return parser.ParsedLink(parser.url, parser.text)
+
+
+def pprint(data):
+    """Alternative to `pprint.PrettyPrinter()` that uses `json.dumps()` for
+    sorting and displaying data.  
+
+    :param data: item to print to STDOUT.  The item must be json serializable!
+    """
+    print(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
