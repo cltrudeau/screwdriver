@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from screwdriver import (dynamic_load, camelcase_to_underscore, 
-    rows_to_columns, parse_link, pprint)
+    rows_to_columns, list_to_rows, parse_link, pprint)
 from waelstow import capture_stdout
 
 # =============================================================================
@@ -36,6 +36,17 @@ class TestUtils(TestCase):
         ]
 
         self.assertEqual(expected, rows_to_columns(matrix))
+
+    def test_list_to_rows(self):
+        src = [1, 2, 3, 4, 5, 6, ]
+        expected = [[1, 2, 3], [4, 5, 6], ]
+
+        self.assertEqual(expected, list(list_to_rows(src, 3)))
+
+        # check it handles a non even division
+        src.append(7)
+        expected.append([7,])
+        self.assertEqual(expected, list(list_to_rows(src, 3)))
 
     def test_parse_link(self):
         url, text = parse_link('')

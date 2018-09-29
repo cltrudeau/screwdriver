@@ -1,3 +1,9 @@
+0.12
+====
+
+* added list_to_rows()
+* no longer testing in python 3.5
+
 0.11
 ====
 

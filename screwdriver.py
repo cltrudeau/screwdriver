@@ -1,4 +1,4 @@
-__version__ = '0.11.0'
+__version__ = '0.12.0'
 
 import sys, json
 from collections import namedtuple
@@ -49,6 +49,25 @@ def rows_to_columns(matrix):
         data.append([matrix[j][i] for j in range(0, num_rows)])
 
     return data
+
+
+def list_to_rows(src, size):
+    """A generator that takes a enumerable item and returns a series of
+    slices. Useful for turning a list into a series of rows. 
+
+    >>> list(list_to_rows([1, 2, 3, 4, 5, 6, 7], 3))
+    [[1, 2, 3], [4, 5, 6], [7, ]]
+    """
+
+    row = []
+    for item in src:
+        row.append(item)
+        if len(row) == size:
+            yield row
+            row = []
+
+    if row:
+        yield row
 
 
 class AnchorParser(html_parser.HTMLParser):
