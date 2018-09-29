@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from screwdriver import (dynamic_load, camelcase_to_underscore, 
-    rows_to_columns, list_to_rows, head_tail_middle, parse_link, pprint)
+    rows_to_columns, list_to_rows, head_tail_middle, parse_link, pprint,
+    DictObject)
 from waelstow import capture_stdout
 
 # =============================================================================
@@ -86,3 +87,13 @@ class TestUtils(TestCase):
             pprint(d)
 
         self.assertEqual(expected, output.getvalue())
+
+    def test_dictobj(self):
+        d = {
+            'x':1,
+            'y':2,
+        }
+
+        o = DictObject(d)
+        self.assertEqual(1, o.x)
+        self.assertEqual(2, o.y)

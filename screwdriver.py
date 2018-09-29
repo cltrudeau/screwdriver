@@ -1,4 +1,4 @@
-__version__ = '0.13.0'
+__version__ = '0.14.0'
 
 import sys, json
 from collections import namedtuple
@@ -44,6 +44,23 @@ def pprint(data):
     :param data: item to print to STDOUT.  The item must be json serializable!
     """
     print(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+
+
+class DictObject(object):
+    """Acts as a wrapper to a dictionary so that keys can be accessed as 
+    properties.
+
+    >>> d = DictObject({'x'=1, 'y'=2})
+    >>> d.x
+    1
+    >>> d._src
+    {'x':1, 'y':2}
+    """
+    def __init__(self, src):
+        self._src = src
+
+    def __getattr__(self, name):
+        return self._src[name]
 
 # =============================================================================
 # List Manipulation
