@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from screwdriver import (dynamic_load, camelcase_to_underscore, 
-    rows_to_columns, list_to_rows, parse_link, pprint)
+    rows_to_columns, list_to_rows, head_tail_middle, parse_link, pprint)
 from waelstow import capture_stdout
 
 # =============================================================================
@@ -47,6 +47,23 @@ class TestUtils(TestCase):
         src.append(7)
         expected.append([7,])
         self.assertEqual(expected, list(list_to_rows(src, 3)))
+
+    def test_head_tail_middle(self):
+        expected = None, [], None
+        self.assertEqual(expected, head_tail_middle([]))
+
+        expected = 1, [], None
+        self.assertEqual(expected, head_tail_middle([1, ]))
+
+        expected = 1, [], 2
+        self.assertEqual(expected, head_tail_middle([1, 2, ]))
+
+        expected = 1, [2, ], 3
+        self.assertEqual(expected, head_tail_middle([1, 2, 3, ]))
+
+        expected = 1, [2, 3, ], 4
+        self.assertEqual(expected, head_tail_middle([1, 2, 3, 4, ]))
+
 
     def test_parse_link(self):
         url, text = parse_link('')

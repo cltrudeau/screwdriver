@@ -1,3 +1,8 @@
+0.13
+====
+
+* added head_tail_middle()
+
 0.12
 ====
 

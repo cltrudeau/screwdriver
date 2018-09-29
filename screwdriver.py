@@ -1,4 +1,4 @@
-__version__ = '0.12.0'
+__version__ = '0.13.0'
 
 import sys, json
 from collections import namedtuple
@@ -37,6 +37,17 @@ def camelcase_to_underscore(text):
 
     return ''.join(result)
 
+def pprint(data):
+    """Alternative to `pprint.PrettyPrinter()` that uses `json.dumps()` for
+    sorting and displaying data.  
+
+    :param data: item to print to STDOUT.  The item must be json serializable!
+    """
+    print(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
+
+# =============================================================================
+# List Manipulation
+# =============================================================================
 
 def rows_to_columns(matrix):
     """Takes a two dimensional array and returns an new one where rows in the
@@ -69,6 +80,30 @@ def list_to_rows(src, size):
     if row:
         yield row
 
+
+def head_tail_middle(src):
+    """Returns a tuple consisting of the head of a enumerable, the middle
+    as a list and the tail of the enumerable. If the enumerable is 1 item, the
+    middle will be empty and the tail will be None. 
+
+    >>> head_tail_middle([1, 2, 3, 4])
+    1, [2, 3], 4
+    """
+
+    if len(src) == 0:
+        return None, [], None
+
+    if len(src) == 1:
+        return src[0], [], None
+
+    if len(src) == 2:
+        return src[0], [], src[1]
+
+    return src[0], src[1:-1], src[-1]
+
+# =============================================================================
+# HTML Parsing
+# =============================================================================
 
 class AnchorParser(html_parser.HTMLParser):
     ParsedLink = namedtuple('ParsedLink', ['url', 'text'])
@@ -125,10 +160,3 @@ def parse_link(html):
     return parser.ParsedLink(parser.url, parser.text)
 
 
-def pprint(data):
-    """Alternative to `pprint.PrettyPrinter()` that uses `json.dumps()` for
-    sorting and displaying data.  
-
-    :param data: item to print to STDOUT.  The item must be json serializable!
-    """
-    print(json.dumps(data, sort_keys=True, indent=4, separators=(',', ': ')))
