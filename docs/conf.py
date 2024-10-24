@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Customized Sphinx config file.  
+# Customized Sphinx config file.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -20,12 +20,13 @@ copyright_start = 2015
 copyright_owner = 'Christopher Trudeau'
 
 # short version number (X.Y)
-import imp
-mod = imp.load_source(project, '../screwdriver.py')
-version = mod.__version__
+import sys
+sys.path.append('../src')
+import screwdriver
+version = screwdriver.__version__
 
 # ===========================================================================
-# Sphinx Customization Starts   
+# Sphinx Customization Starts
 #    - you probably don't need to touch anything after this point
 # ===========================================================================
 
@@ -82,7 +83,7 @@ release = version
 #
 # This is also used if you do content translation via gettext catalogs.
 # Usually you set "language" from the command line for these cases.
-language = None
+language = "en"
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

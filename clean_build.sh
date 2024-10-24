@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=`grep "__version__ = " screwdriver.py | cut -d "'" -f 2`
+version=`grep "__version__ = " src/screwdriver.py | cut -d "'" -f 2`
 
 git tag "$version"
 
@@ -10,8 +10,9 @@ fi
 
 rm -rf build
 rm -rf dist
-python setup.py sdist
-python setup.py bdist_wheel --universal
+python -m build
+
+twine check dist/*
 
 echo "------------------------"
 echo

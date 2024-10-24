@@ -14,7 +14,7 @@ Installation
 Supports
 ========
 
-screwdriver has been tested with Python 2.7, 3.6 and 3.7
+screwdriver has been tested with Python 3.9 - 3.13
 
 Docs & Source
 =============

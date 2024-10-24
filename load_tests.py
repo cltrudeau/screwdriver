@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import unittest, sys
-from waelstow import discover_tests, list_tests
+from waelstow import discover_tests
+
+sys.path.append('./src')
 
 def get_suite(labels=[]):
-    return discover_tests('unittests', labels)
+    return discover_tests('tests', labels)
 
 
 if __name__ == '__main__':

@@ -1,3 +1,10 @@
+0.15.0
+======
+
+* 2024/10/24
+* Updated tests and support to Python 3.9-3.13
+
+
 0.14
 ====
 

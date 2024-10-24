@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "screwdriver"
+dynamic = ["version"]
+description = "Collection of random python tools and utilities"
+readme = "README.rst"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Christopher Trudeau", email = "ctrudeau+pypi@arsensa.com"}
+]
+keywords = ["tools"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.9"
+
+[project.urls]
+Homepage = "https://github.com/cltrudeau/screwdriver"
+Documentation = "https://screwdriver.readthedocs.io"
+
+[project.optional-dependencies]
+dev = [
+    "coverage==7.6.4",
+    "nox==2024.10.9",
+    "pudb==2024.1.3",
+    "pyflakes==3.2.0",
+    "Sphinx==8.1.3",
+    "sphinx-rtd-theme==3.0.1",
+    "twine==5.1.1",
+    "waelstow==0.11.1",
+]
+
+[tool.setuptools.dyanmic]
+version = {attr = "screwdriver.__version__"}

@@ -1,9 +1,9 @@
-__version__ = '0.14.0'
+__version__ = '0.15.0'
 
-import sys, json
+import json
 from collections import namedtuple
 
-from six.moves import html_parser 
+from html.parser import HTMLParser
 
 # =============================================================================
 # Utility Methods
@@ -37,9 +37,10 @@ def camelcase_to_underscore(text):
 
     return ''.join(result)
 
+
 def pprint(data):
     """Alternative to `pprint.PrettyPrinter()` that uses `json.dumps()` for
-    sorting and displaying data.  
+    sorting and displaying data.
 
     :param data: item to print to STDOUT.  The item must be json serializable!
     """
@@ -47,7 +48,7 @@ def pprint(data):
 
 
 class DictObject(object):
-    """Acts as a wrapper to a dictionary so that keys can be accessed as 
+    """Acts as a wrapper to a dictionary so that keys can be accessed as
     properties.
 
     >>> d = DictObject({'x'=1, 'y'=2})
@@ -81,7 +82,7 @@ def rows_to_columns(matrix):
 
 def list_to_rows(src, size):
     """A generator that takes a enumerable item and returns a series of
-    slices. Useful for turning a list into a series of rows. 
+    slices. Useful for turning a list into a series of rows.
 
     >>> list(list_to_rows([1, 2, 3, 4, 5, 6, 7], 3))
     [[1, 2, 3], [4, 5, 6], [7, ]]
@@ -101,7 +102,7 @@ def list_to_rows(src, size):
 def head_tail_middle(src):
     """Returns a tuple consisting of the head of a enumerable, the middle
     as a list and the tail of the enumerable. If the enumerable is 1 item, the
-    middle will be empty and the tail will be None. 
+    middle will be empty and the tail will be None.
 
     >>> head_tail_middle([1, 2, 3, 4])
     1, [2, 3], 4
@@ -122,16 +123,11 @@ def head_tail_middle(src):
 # HTML Parsing
 # =============================================================================
 
-class AnchorParser(html_parser.HTMLParser):
+class AnchorParser(HTMLParser):
     ParsedLink = namedtuple('ParsedLink', ['url', 'text'])
 
     def __init__(self, *args, **kwargs):
-        if sys.version_info > (3,):
-            super(AnchorParser, self).__init__(*args, **kwargs)
-        else:   # pragma: no cover
-            # html_parser is still an old style object and so super doesn't
-            # work
-            html_parser.HTMLParser.__init__(self, *args, **kwargs)
+        super(AnchorParser, self).__init__(*args, **kwargs)
 
         self.capture = 0
         self.url = ''
@@ -175,5 +171,3 @@ def parse_link(html):
     parser = AnchorParser()
     parser.feed(html)
     return parser.ParsedLink(parser.url, parser.text)
-
-
